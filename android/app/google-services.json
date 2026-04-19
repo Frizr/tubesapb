@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "378644720468",
+    "project_id": "tubesapb-14def",
+    "storage_bucket": "tubesapb-14def.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378644720468:android:09bea5057b3a4d0068f6c1",
+        "android_client_info": {
+          "package_name": "com.tutu.cashier"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVrh56FEFnxg69S1BAV9a3bZMrUslIT4w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
