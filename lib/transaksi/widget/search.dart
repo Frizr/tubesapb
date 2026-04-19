@@ -2,7 +2,7 @@ import 'package:cashier/controller/barangcontroller.dart';
 import 'package:cashier/transaksi/widget/listsearch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cashier/manage/scan_dialog.dart';
+// scan removed: searches no longer use camera
 
 class Search extends StatefulWidget {
   @override
@@ -12,21 +12,6 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   Getbarang b = Get.put(Getbarang());
   TextEditingController barang = TextEditingController();
-  String? barcode;
-  _scan() async {
-    final result = await showDialog<String>(
-      context: context,
-      builder: (context) => ScanDialog(),
-    );
-    if (result != null) {
-      setState(() {
-        barcode = result;
-        barang.text = barcode ?? '';
-        b.cari(cari: barcode ?? '');
-      });
-      print(barcode);
-    }
-  }
 
   Widget sc() {
     return Container(
@@ -48,9 +33,6 @@ class _SearchState extends State<Search> {
         ),
         controller: barang,
         decoration: InputDecoration(
-          suffixIcon: InkWell(
-              onTap: _scan,
-              child: Icon(Icons.qr_code_outlined, color: Colors.black)),
           hintText: "Cari barang",
           border: InputBorder.none,
         ),

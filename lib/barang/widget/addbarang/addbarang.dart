@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:cashier/controller/barangcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cashier/manage/scan_dialog.dart';
+// scan removed per user request
 
 class AddBaranG extends StatefulWidget {
   @override
@@ -11,27 +11,11 @@ class AddBaranG extends StatefulWidget {
 }
 
 class _AddBaranGState extends State<AddBaranG> {
-  TextEditingController kodebar = TextEditingController();
   TextEditingController nama = TextEditingController();
   TextEditingController harga = TextEditingController();
   TextEditingController jumlah = TextEditingController();
   TextEditingController modal = TextEditingController();
-  String? barcode;
   Getbarang b = Get.put(Getbarang());
-
-  _scan() async {
-    final result = await showDialog<String>(
-      context: context,
-      builder: (context) => ScanDialog(),
-    );
-    if (result != null) {
-      setState(() {
-        barcode = result;
-        kodebar.text = barcode ?? '';
-      });
-      print(barcode);
-    }
-  }
 
   Widget sc(
       {required String hint,
@@ -55,12 +39,6 @@ class _AddBaranGState extends State<AddBaranG> {
         ),
         controller: c,
         decoration: InputDecoration(
-          suffixIcon: hint == "Kode"
-              ? InkWell(
-                  onTap: _scan,
-                  child: Icon(Icons.qr_code_rounded),
-                )
-              : null,
           hintText: hint,
           border: InputBorder.none,
         ),
@@ -91,10 +69,7 @@ class _AddBaranGState extends State<AddBaranG> {
             SizedBox(
               height: 15,
             ),
-            sc(hint: "Kode", c: kodebar, tp: TextInputType.text),
-            SizedBox(
-              height: 10,
-            ),
+            // kode removed - not required
             sc(hint: "Nama barang", c: nama, tp: TextInputType.text),
             SizedBox(
               height: 10,
@@ -126,7 +101,7 @@ class _AddBaranGState extends State<AddBaranG> {
                     foregroundColor: Colors.white,
                     onPressed: () {
                       b.addbarang(
-                        bar: kodebar.text,
+                        bar: '',
                         nama: nama.text,
                         harga: int.tryParse(harga.text) ?? 0,
                         jumlah: int.tryParse(jumlah.text) ?? 0,

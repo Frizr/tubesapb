@@ -24,7 +24,6 @@ class Expa extends StatefulWidget {
 }
 
 class _ExpaState extends State<Expa> {
-  TextEditingController kode = TextEditingController();
   TextEditingController nama = TextEditingController();
   TextEditingController harga = TextEditingController();
   TextEditingController stock = TextEditingController();
@@ -180,44 +179,7 @@ class _ExpaState extends State<Expa> {
             //     ),
             //   ),
             // ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
-                  child: Text(
-                    "Kode",
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  margin: EdgeInsets.only(left: 15, right: 15),
-                  padding: EdgeInsets.only(left: 15, right: 15, bottom: 1),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.shade200,
-                  ),
-                  child: TextField(
-                    onChanged: (value) {
-                      setState(() {});
-                    },
-                    cursorColor: Colors.black,
-                    style: TextStyle(
-                      fontSize: 13,
-                    ),
-                    controller: kode,
-                    decoration: InputDecoration(
-                      hintText: "Kode",
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            // kode removed from item edit (not required)
             SizedBox(
               height: 15,
             ),
@@ -441,13 +403,10 @@ class _ExpaState extends State<Expa> {
           ],
           onExpansionChanged: (value) {
             setState(() {
-              if (value == false) {
-                kode.text.length <= 0
-                    ? kode.text = widget.kode
-                    : kode.text = kode.text;
+                if (value == false) {
                 nama.text.length <= 0
-                    ? nama.text = widget.nama
-                    : nama.text = nama.text;
+                  ? nama.text = widget.nama
+                  : nama.text = nama.text;
                 harga.text.length <= 0
                     ? harga.text = widget.harga.toString()
                     : harga.text = harga.text;
@@ -459,7 +418,6 @@ class _ExpaState extends State<Expa> {
                     : modal.text = modal.text;
               }
               if (value == true) {
-                kode.text = widget.kode;
                 nama.text = widget.nama;
                 harga.text = widget.harga.toString();
                 stock.text = widget.stock.toString();

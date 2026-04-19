@@ -44,13 +44,24 @@ class Getbarang extends GetxController {
   }
 
   cari({required String cari}) async {
-    temu = barang
-        .where(
-          (element) => element.toString().contains(
-                cari.toLowerCase(),
-              ),
-        )
-        .toList();
+    final q = cari.trim().toLowerCase();
+    if (q.isEmpty) {
+      temu = [];
+      update();
+      return;
+    }
+
+    temu = barang.where((element) {
+      try {
+        final data = element['data'] as Map<String, dynamic>?;
+        final name = (data?['nama'] ?? '').toString().toLowerCase();
+        final code = (data?['bar'] ?? '').toString().toLowerCase();
+        return name.contains(q) || code.contains(q);
+      } catch (e) {
+        // fallback to string match if structure unexpected
+        return element.toString().toLowerCase().contains(q);
+      }
+    }).toList();
     update();
   }
 
