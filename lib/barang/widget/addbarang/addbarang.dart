@@ -33,7 +33,10 @@ class _AddBaranGState extends State<AddBaranG> {
     }
   }
 
-  Widget sc({required String hint, required TextEditingController c, required TextInputType tp}) {
+  Widget sc(
+      {required String hint,
+      required TextEditingController c,
+      required TextInputType tp}) {
     return Container(
       height: 40,
       padding: EdgeInsets.only(left: 15, right: 0, bottom: 1),
@@ -122,13 +125,13 @@ class _AddBaranGState extends State<AddBaranG> {
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.white,
                     onPressed: () {
-                        b.addbarang(
-                          bar: kodebar.text,
-                          nama: nama.text,
-                          harga: int.tryParse(harga.text) ?? 0,
-                          jumlah: int.tryParse(jumlah.text) ?? 0,
-                          modal: int.tryParse(modal.text) ?? 0,
-                        );
+                      b.addbarang(
+                        bar: kodebar.text,
+                        nama: nama.text,
+                        harga: int.tryParse(harga.text) ?? 0,
+                        jumlah: int.tryParse(jumlah.text) ?? 0,
+                        modal: int.tryParse(modal.text) ?? 0,
+                      );
                       if (Get.isBottomSheetOpen == true) Get.back();
                     },
                     child: Icon(

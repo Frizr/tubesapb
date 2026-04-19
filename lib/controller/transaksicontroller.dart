@@ -22,14 +22,18 @@ class TransaksiController extends GetxController {
         var newItem = Map<String, dynamic>.from(item);
         if (!newItem.containsKey('modal') || newItem['modal'] == null) {
           String idb = '';
-          if (newItem.containsKey('idb') && newItem['idb'] != null) idb = newItem['idb'].toString();
-          else if (newItem.containsKey('id') && newItem['id'] != null) idb = newItem['id'].toString();
+          if (newItem.containsKey('idb') && newItem['idb'] != null)
+            idb = newItem['idb'].toString();
+          else if (newItem.containsKey('id') && newItem['id'] != null)
+            idb = newItem['id'].toString();
 
           int modal = 0;
           if (idb.isNotEmpty && gb != null) {
             try {
               var found = gb.barang.firstWhere((e) => e['id'] == idb);
-              if (found != null && found['data'] != null && (found['data'] as Map).containsKey('modal')) {
+              if (found != null &&
+                  found['data'] != null &&
+                  (found['data'] as Map).containsKey('modal')) {
                 modal = ((found['data'] as Map)['modal'] as num).toInt();
               }
             } catch (e) {
@@ -54,8 +58,10 @@ class TransaksiController extends GetxController {
       Map<String, int> qtyMap = {};
       for (var it in itemsWithModal) {
         String idb = '';
-        if (it is Map && it.containsKey('idb') && it['idb'] != null) idb = it['idb'].toString();
-        else if (it is Map && it.containsKey('id') && it['id'] != null) idb = it['id'].toString();
+        if (it is Map && it.containsKey('idb') && it['idb'] != null)
+          idb = it['idb'].toString();
+        else if (it is Map && it.containsKey('id') && it['id'] != null)
+          idb = it['id'].toString();
         int q = 0;
         try {
           q = (it['jumlahbeli'] as num?)?.toInt() ?? 0;

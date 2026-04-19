@@ -12,7 +12,13 @@ class Expa extends StatefulWidget {
   final int harga;
   final int stock;
   final int modal;
-  Expa({required this.id, required this.kode, required this.nama, required this.harga, required this.stock, this.modal = 0});
+  Expa(
+      {required this.id,
+      required this.kode,
+      required this.nama,
+      required this.harga,
+      required this.stock,
+      this.modal = 0});
   @override
   _ExpaState createState() => _ExpaState();
 }
@@ -78,7 +84,9 @@ class _ExpaState extends State<Expa> {
         data: ThemeData(fontFamily: 'm').copyWith(
           dividerColor: Colors.transparent,
           focusColor: Colors.black,
-          primaryColor: Colors.black, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
+          primaryColor: Colors.black,
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
         ),
         child: ExpansionTile(
           tilePadding: EdgeInsets.fromLTRB(15, 15, 15, 15),

@@ -1,4 +1,3 @@
-
 import 'package:cashier/controller/barangcontroller.dart';
 import 'package:cashier/transaksi/widget/listsearch.dart';
 import 'package:flutter/material.dart';
@@ -94,11 +93,23 @@ class _SearchState extends State<Search> {
                         children: [
                           for (var a in val.temu)
                             ListSearch(
-                              kode: (a['data'] != null && (a['data']['bar'] ?? '') != null) ? (a['data']['bar'] ?? '').toString() : (a['bar'] ?? '').toString(),
+                              kode: (a['data'] != null &&
+                                      (a['data']['bar'] ?? '') != null)
+                                  ? (a['data']['bar'] ?? '').toString()
+                                  : (a['bar'] ?? '').toString(),
                               id: (a['id'] ?? '').toString(),
-                              nama: (a['data'] != null && (a['data']['nama'] ?? '') != null) ? (a['data']['nama'] ?? '').toString() : ''.toString(),
-                              harga: (a['data'] != null && a['data']['harga'] != null) ? (a['data']['harga'] as num).toInt() : 0,
-                              stock: (a['data'] != null && a['data']['jumlah'] != null) ? (a['data']['jumlah'] as num).toInt() : 0,
+                              nama: (a['data'] != null &&
+                                      (a['data']['nama'] ?? '') != null)
+                                  ? (a['data']['nama'] ?? '').toString()
+                                  : ''.toString(),
+                              harga: (a['data'] != null &&
+                                      a['data']['harga'] != null)
+                                  ? (a['data']['harga'] as num).toInt()
+                                  : 0,
+                              stock: (a['data'] != null &&
+                                      a['data']['jumlah'] != null)
+                                  ? (a['data']['jumlah'] as num).toInt()
+                                  : 0,
                               x: false,
                               i: 0,
                             ),
