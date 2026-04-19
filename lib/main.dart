@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
       ),
     );
     return GetMaterialApp(
+      title: 'Kasir Kilat',
       theme: ThemeData(
         fontFamily: "m",
         primaryColor: Colors.black, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),

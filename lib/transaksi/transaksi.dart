@@ -6,7 +6,7 @@ import 'package:cashier/transaksi/widget/listsearch.dart';
 import 'package:cashier/transaksi/widget/search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
+// lottie animation removed per user request
 
 class Transaksi extends StatefulWidget {
   @override
@@ -25,11 +25,21 @@ class _TransaksiState extends State<Transaksi> {
         shadowColor: Colors.black,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        title: Text(
-          "Cashier mobile",
-          style: TextStyle(
-            color: Colors.black,
-          ),
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/f6c05c2d-be07-488c-95a9-f77fa90a54c8.jpg',
+              width: 32,
+              height: 32,
+            ),
+            SizedBox(width: 10),
+            Text(
+              "Kasir Kilat",
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+          ],
         ),
         actions: [
           InkWell(
@@ -52,13 +62,16 @@ class _TransaksiState extends State<Transaksi> {
           return SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: val.beli.length < 0 || val.beli.isEmpty
-                ? SizedBox(
-                    height: Get.height / 1.5,
-                    child: Center(
-                      child:
-                          Lottie.asset('assets/can.json', width: Get.width / 2),
-                    ),
-                  )
+                  ? SizedBox(
+                      height: Get.height / 1.5,
+                      child: Center(
+                        child: Image.asset(
+                          'assets/Gemini_Generated_Image_eu48jheu48jheu48.png',
+                          width: Get.width / 2,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    )
                 : Column(
                     children: [
                       for (var i = 0; i < val.beli.length; i++)
