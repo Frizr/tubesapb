@@ -11,7 +11,14 @@ class Expa extends StatefulWidget {
   final String nama;
   final int harga;
   final int stock;
-  Expa({required this.id, required this.kode, required this.nama, required this.harga, required this.stock});
+  final int modal;
+  Expa(
+      {required this.id,
+      required this.kode,
+      required this.nama,
+      required this.harga,
+      required this.stock,
+      this.modal = 0});
   @override
   _ExpaState createState() => _ExpaState();
 }
@@ -21,6 +28,7 @@ class _ExpaState extends State<Expa> {
   TextEditingController nama = TextEditingController();
   TextEditingController harga = TextEditingController();
   TextEditingController stock = TextEditingController();
+  TextEditingController modal = TextEditingController();
   bool ex = false;
   Getbarang b = Get.put(Getbarang());
   @override
@@ -30,6 +38,18 @@ class _ExpaState extends State<Expa> {
 
   @override
   Widget build(BuildContext context) {
+    String statusText = "";
+    Color statusColor = Colors.green;
+    if (widget.stock <= 0) {
+      statusText = "Stok Kosong";
+      statusColor = Colors.red;
+    } else if (widget.stock <= 10) {
+      statusText = "Stok Hampir Habis";
+      statusColor = Colors.orange;
+    } else {
+      statusText = "Stok Tersedia";
+      statusColor = Colors.green;
+    }
     return Slidable(
       key: ValueKey(widget.id),
       startActionPane: ActionPane(
@@ -64,7 +84,9 @@ class _ExpaState extends State<Expa> {
         data: ThemeData(fontFamily: 'm').copyWith(
           dividerColor: Colors.transparent,
           focusColor: Colors.black,
-          primaryColor: Colors.black, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
+          primaryColor: Colors.black,
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
         ),
         child: ExpansionTile(
           tilePadding: EdgeInsets.fromLTRB(15, 15, 15, 15),
@@ -109,16 +131,26 @@ class _ExpaState extends State<Expa> {
                   )
                 ],
               ),
-              Container(
-                padding: EdgeInsets.fromLTRB(5, 4, 5, 4),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: widget.stock <= 5 ? Colors.red : Colors.green,
-                ),
-                child: Text(
-                  widget.stock.toString(),
-                  style: TextStyle(fontSize: 13, color: Colors.white),
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    padding: EdgeInsets.fromLTRB(8, 6, 8, 6),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: statusColor,
+                    ),
+                    child: Text(
+                      widget.stock.toString(),
+                      style: TextStyle(fontSize: 13, color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    statusText,
+                    style: TextStyle(fontSize: 11, color: statusColor),
+                  ),
+                ],
               )
             ],
           ),
@@ -283,6 +315,49 @@ class _ExpaState extends State<Expa> {
                     Padding(
                       padding: const EdgeInsets.only(left: 15, right: 15),
                       child: Text(
+                        "Modal",
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 40,
+                      margin: EdgeInsets.only(left: 7.5, right: 7.5),
+                      padding: EdgeInsets.only(left: 15, right: 15, bottom: 1),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey.shade200,
+                      ),
+                      child: TextField(
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                        cursorColor: Colors.black,
+                        style: TextStyle(
+                          fontSize: 13,
+                        ),
+                        controller: modal,
+                        decoration: InputDecoration(
+                          hintText: "Modal",
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ResponsiveGridCol(
+                xs: 6,
+                md: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15, right: 15),
+                      child: Text(
                         "Jumlah",
                         style: TextStyle(
                           fontSize: 13,
@@ -330,6 +405,7 @@ class _ExpaState extends State<Expa> {
                     nama: nama.text,
                     harga: int.tryParse(harga.text) ?? 0,
                     stock: int.tryParse(stock.text) ?? 0,
+                    modal: int.tryParse(modal.text) ?? 0,
                   );
                 },
                 child: Container(
@@ -378,12 +454,16 @@ class _ExpaState extends State<Expa> {
                 stock.text.length <= 0
                     ? stock.text = widget.stock.toString()
                     : stock.text = stock.text;
+                modal.text.length <= 0
+                    ? modal.text = widget.modal.toString()
+                    : modal.text = modal.text;
               }
               if (value == true) {
                 kode.text = widget.kode;
                 nama.text = widget.nama;
                 harga.text = widget.harga.toString();
                 stock.text = widget.stock.toString();
+                modal.text = widget.modal.toString();
               }
               ex = value;
             });

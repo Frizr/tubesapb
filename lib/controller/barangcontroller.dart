@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -83,22 +82,34 @@ class Getbarang extends GetxController {
     update();
   }
 
-  addbarang({required String bar, required String nama, required int harga, required int jumlah}) async {
+  addbarang(
+      {required String bar,
+      required String nama,
+      required int harga,
+      required int jumlah,
+      required int modal}) async {
     await dbbarang.add({
       'bar': bar,
       'nama': nama,
       'harga': harga,
       'jumlah': jumlah,
+      'modal': modal,
       'tgl': DateTime.now(),
     });
     update();
   }
 
-  editbarang({required String id, required String nama, required int harga, required int stock}) async {
+  editbarang(
+      {required String id,
+      required String nama,
+      required int harga,
+      required int stock,
+      required int modal}) async {
     await dbbarang.doc(id).update({
       'nama': nama,
       'harga': harga,
       'jumlah': stock,
+      'modal': modal,
     });
     update();
   }

@@ -77,11 +77,22 @@ class _ListBarangState extends State<ListBarang> {
                 children: [
                   for (var a in val.barang)
                     Expa(
-                      kode: a['data']['bar'],
-                      id: a['id'],
-                      nama: a['data']['nama'],
-                      harga: a['data']['harga'],
-                      stock: a['data']['jumlah'],
+                      kode: (a['data'] != null && a['data']['bar'] != null)
+                          ? (a['data']['bar'] ?? '').toString()
+                          : (a['bar'] ?? '').toString(),
+                      id: (a['id'] ?? '').toString(),
+                      nama: (a['data'] != null && a['data']['nama'] != null)
+                          ? (a['data']['nama'] ?? '').toString()
+                          : ''.toString(),
+                      harga: (a['data'] != null && a['data']['harga'] != null)
+                          ? (a['data']['harga'] as num).toInt()
+                          : 0,
+                      stock: (a['data'] != null && a['data']['jumlah'] != null)
+                          ? (a['data']['jumlah'] as num).toInt()
+                          : 0,
+                      modal: a['data'] != null && a['data'].containsKey('modal')
+                          ? (a['data']['modal'] as int)
+                          : 0,
                     ),
                 ],
               );

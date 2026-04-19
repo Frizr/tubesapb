@@ -63,14 +63,14 @@ class _TransaksiState extends State<Transaksi> {
                     children: [
                       for (var i = 0; i < val.beli.length; i++)
                         ListSearch(
-                          kode: a[i]['kode'],
-                          id: a[i]['id'],
-                          nama: a[i]['nama'],
-                          harga: a[i]['harga'],
-                          stock: a[i]['jumlah'],
+                          kode: (a[i]['kode'] ?? '').toString(),
+                          id: (a[i]['id'] ?? '').toString(),
+                          nama: (a[i]['nama'] ?? '').toString(),
+                          harga: (a[i]['harga'] as num?)?.toInt() ?? 0,
+                          stock: (a[i]['jumlah'] as num?)?.toInt() ?? 0,
                           x: true,
                           i: i,
-                          jumbel: a[i]['jumlahbeli'],
+                          jumbel: (a[i]['jumlahbeli'] as num?)?.toInt() ?? 0,
                         ),
                     ],
                   ),
@@ -90,8 +90,7 @@ class _TransaksiState extends State<Transaksi> {
               return val.beli.isNotEmpty || val.beli.length > 0
                   ? InkWell(
                       onTap: () {
-                        if (val.beli.length <= 0 ||
-                            b == 0) {
+                        if (val.beli.length <= 0 || b == 0) {
                           print("Kosong");
                         } else {
                           t.addtransaksi(data: val.beli, bayar: b);
