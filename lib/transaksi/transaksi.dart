@@ -62,16 +62,16 @@ class _TransaksiState extends State<Transaksi> {
                 : Column(
                     children: [
                       for (var i = 0; i < val.beli.length; i++)
-                        ListSearch(
-                          kode: a[i]['kode'],
-                          id: a[i]['id'],
-                          nama: a[i]['nama'],
-                          harga: a[i]['harga'],
-                          stock: a[i]['jumlah'],
-                          x: true,
-                          i: i,
-                          jumbel: a[i]['jumlahbeli'],
-                        ),
+                          ListSearch(
+                            kode: (a[i]['kode'] ?? '').toString(),
+                            id: (a[i]['id'] ?? '').toString(),
+                            nama: (a[i]['nama'] ?? '').toString(),
+                            harga: (a[i]['harga'] as num?)?.toInt() ?? 0,
+                            stock: (a[i]['jumlah'] as num?)?.toInt() ?? 0,
+                            x: true,
+                            i: i,
+                            jumbel: (a[i]['jumlahbeli'] as num?)?.toInt() ?? 0,
+                          ),
                     ],
                   ),
           );
