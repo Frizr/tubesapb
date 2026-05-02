@@ -371,7 +371,7 @@ class _TransaksiState extends State<Transaksi> {
             final queryNotEmpty = _searchController.text.trim().isNotEmpty;
             final hasil = queryNotEmpty ? val.temu : val.barang;
 
-            if ((hasil == null || hasil.isEmpty) && queryNotEmpty) {
+            if ((hasil.isEmpty) && queryNotEmpty) {
               return Padding(
                 padding: const EdgeInsets.only(top: 24),
                 child: Column(
