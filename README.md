@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Kasir Kilat
 
 Kasir Kilat adalah aplikasi Point of Sales (POS) / Kasir digital modern yang dirancang khusus untuk UMKM (Usaha Mikro, Kecil, dan Menengah). Aplikasi ini dibangun dengan menggunakan arsitektur yang bersih, antarmuka yang elegan (tema Dark Navy & Teal), dan dukungan database real-time.
@@ -86,3 +87,6 @@ Aplikasi ini memiliki 4 pilar fitur utama yang dapat diakses melalui navigasi ba
 
 ---
 *Dibuat untuk memudahkan operasional UMKM menjadi lebih cepat dan kilat!*
+=======
+cashier aplication using flutter firebase
+>>>>>>> 9646e53f1d48b67941cbdfaf6c3fec75f51e7574
