@@ -69,7 +69,6 @@ class _LaporanState extends State<Laporan> {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(16),
         child: GetBuilder<TransaksiController>(
-          init: TransaksiController(),
           builder: (val) {
             final filteredTrx = _getFilteredTransactions(val);
 
@@ -80,7 +79,7 @@ class _LaporanState extends State<Laporan> {
 
             for (var wrap in filteredTrx) {
               var trx = wrap['data'] as Map<String, dynamic>;
-              totalRevenue += (trx['bayar'] as num).toInt();
+              totalRevenue += (trx['bayar'] as num?)?.toInt() ?? 0;
               var items = trx['data'] as List<dynamic>? ?? [];
               for (var it in items) {
                 String idb =
@@ -469,7 +468,7 @@ class _LaporanState extends State<Laporan> {
             int dayTotal = 0;
             for (var wrap in dayTrx) {
               var trx = wrap['data'] as Map<String, dynamic>;
-              dayTotal += (trx['bayar'] as num).toInt();
+              dayTotal += (trx['bayar'] as num?)?.toInt() ?? 0;
             }
             DateTime date = DateTime.parse(dateKey);
             bool isToday = dateKey ==
@@ -801,7 +800,7 @@ class _LaporanState extends State<Laporan> {
     Map<String, Map<String, dynamic>> stats = {};
     for (var wrap in t.transaksi) {
       var trx = wrap['data'] as Map<String, dynamic>;
-      totalRevenue += (trx['bayar'] as num).toInt();
+      totalRevenue += (trx['bayar'] as num?)?.toInt() ?? 0;
       var items = trx['data'] as List<dynamic>? ?? [];
       for (var it in items) {
         String idb = (it['idb'] ?? it['id'] ?? it['kode'] ?? '').toString();

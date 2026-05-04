@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:cashier/controller/barangcontroller.dart';
 
 class TransaksiController extends GetxController {
   List transaksi = [];
+  StreamSubscription? _sub;
   CollectionReference dbtransaksi =
       FirebaseFirestore.instance.collection('transaksi');
 
@@ -112,8 +114,9 @@ class TransaksiController extends GetxController {
   }
 
   void gettransaksi() {
+    _sub?.cancel();
     transaksi.clear();
-    dbtransaksi
+    _sub = dbtransaksi
         .orderBy('tgl', descending: true)
         .snapshots(includeMetadataChanges: true)
         .listen(
@@ -178,7 +181,7 @@ class TransaksiController extends GetxController {
     int total = 0;
     for (var wrap in trxList) {
       var trx = wrap['data'] as Map<String, dynamic>;
-      total += (trx['bayar'] as num).toInt();
+      total += (trx['bayar'] as num?)?.toInt() ?? 0;
     }
     return total;
   }
@@ -199,5 +202,10 @@ class TransaksiController extends GetxController {
       });
     }
     return result;
+  }
+  @override
+  void onClose() {
+    _sub?.cancel();
+    super.onClose();
   }
 }

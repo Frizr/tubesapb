@@ -60,9 +60,9 @@ class _MainWrapperState extends State<MainWrapper> {
 
   @override
   void initState() {
+    super.initState();
     b.getbarang();
     t.gettransaksi();
-    super.initState();
   }
 
   Future<void> _refreshCurrentPage() async {

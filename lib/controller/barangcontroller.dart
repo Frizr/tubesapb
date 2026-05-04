@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,6 +6,7 @@ import 'package:get/get.dart';
 class Getbarang extends GetxController {
   CollectionReference dbbarang =
       FirebaseFirestore.instance.collection('barang');
+  StreamSubscription? _sub;
   List barang = [];
   List temu = [];
   List beli = [];
@@ -119,8 +121,9 @@ class Getbarang extends GetxController {
   }
 
   void getbarang() {
+    _sub?.cancel();
     barang.clear();
-    dbbarang
+    _sub = dbbarang
         .orderBy('tgl', descending: true)
         .snapshots(includeMetadataChanges: true)
         .listen(
@@ -228,5 +231,11 @@ class Getbarang extends GetxController {
       }
     }
     return total;
+  }
+
+  @override
+  void onClose() {
+    _sub?.cancel();
+    super.onClose();
   }
 }

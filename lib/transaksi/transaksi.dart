@@ -363,7 +363,6 @@ class _TransaksiState extends State<Transaksi> {
         ],
       ),
       body: GetBuilder<Getbarang>(
-        init: Getbarang(),
         builder: (val) {
           final cart = val.beli;
           Widget productListWidget() {
@@ -510,7 +509,6 @@ class _TransaksiState extends State<Transaksi> {
         },
       ),
       floatingActionButton: GetBuilder<Getbarang>(
-        init: Getbarang(),
         builder: (val) {
           int totalBayar = 0;
           val.beli.forEach((item) {

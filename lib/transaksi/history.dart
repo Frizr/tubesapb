@@ -13,7 +13,6 @@ class _HistoryState extends State<History> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<TransaksiController>(
-      init: TransaksiController(),
       builder: (val) {
         return Scaffold(
           backgroundColor: AppColors.bgLight,

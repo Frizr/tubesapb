@@ -123,7 +123,7 @@ class _ContentHisState extends State<ContentHis> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    uang.format(data['bayar']),
+                    uang.format((data['bayar'] as num?)?.toInt() ?? 0),
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
