@@ -1,3 +1,4 @@
+import 'package:cashier/controller/authcontroller.dart';
 import 'package:cashier/controller/barangcontroller.dart';
 import 'package:cashier/manage/formater.dart';
 import 'package:cashier/theme/app_colors.dart';
@@ -110,44 +111,50 @@ class _ExpaState extends State<Expa> {
           ),
         ],
       ),
-      child: Slidable(
-        key: ValueKey(widget.id),
-        startActionPane: ActionPane(
-          motion: const DrawerMotion(),
-          children: [
-            SlidableAction(
-              label: 'Hapus',
-              backgroundColor: AppColors.danger,
-              foregroundColor: Colors.white,
-              icon: Icons.delete_outline_rounded,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(14),
-                bottomLeft: Radius.circular(14),
-              ),
-              onPressed: (context) {
-                b.deletbarang(id: widget.id, nama: widget.nama);
-              },
-            ),
-          ],
-        ),
-        endActionPane: ActionPane(
-          motion: const DrawerMotion(),
-          children: [
-            SlidableAction(
-              label: 'Hapus',
-              backgroundColor: AppColors.danger,
-              foregroundColor: Colors.white,
-              icon: Icons.delete_outline_rounded,
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(14),
-                bottomRight: Radius.circular(14),
-              ),
-              onPressed: (context) {
-                b.deletbarang(id: widget.id, nama: widget.nama);
-              },
-            ),
-          ],
-        ),
+      child: Obx(() {
+        final isAdmin = Get.find<AuthController>().isAdmin;
+        return Slidable(
+          key: ValueKey(widget.id),
+          startActionPane: isAdmin
+              ? ActionPane(
+                  motion: const DrawerMotion(),
+                  children: [
+                    SlidableAction(
+                      label: 'Hapus',
+                      backgroundColor: AppColors.danger,
+                      foregroundColor: Colors.white,
+                      icon: Icons.delete_outline_rounded,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(14),
+                        bottomLeft: Radius.circular(14),
+                      ),
+                      onPressed: (context) {
+                        b.deletbarang(id: widget.id, nama: widget.nama);
+                      },
+                    ),
+                  ],
+                )
+              : null,
+          endActionPane: isAdmin
+              ? ActionPane(
+                  motion: const DrawerMotion(),
+                  children: [
+                    SlidableAction(
+                      label: 'Hapus',
+                      backgroundColor: AppColors.danger,
+                      foregroundColor: Colors.white,
+                      icon: Icons.delete_outline_rounded,
+                      borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(14),
+                        bottomRight: Radius.circular(14),
+                      ),
+                      onPressed: (context) {
+                        b.deletbarang(id: widget.id, nama: widget.nama);
+                      },
+                    ),
+                  ],
+                )
+              : null,
         child: Theme(
           data: ThemeData(fontFamily: 'm').copyWith(
             dividerColor: Colors.transparent,
@@ -266,6 +273,7 @@ class _ExpaState extends State<Expa> {
                       ],
                     ),
                     const SizedBox(height: 14),
+                    if (isAdmin)
                     Align(
                       alignment: Alignment.centerLeft,
                       child: SizedBox(
@@ -310,7 +318,8 @@ class _ExpaState extends State<Expa> {
             },
           ),
         ),
-      ),
+        );
+      }),
     );
   }
 }

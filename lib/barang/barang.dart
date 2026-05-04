@@ -1,6 +1,7 @@
 import 'package:cashier/barang/widget/addbarang/addbarang.dart';
 import 'package:cashier/barang/widget/list/listbarang.dart';
 import 'package:cashier/barang/widget/totalup.dart';
+import 'package:cashier/controller/authcontroller.dart';
 import 'package:cashier/controller/barangcontroller.dart';
 import 'package:cashier/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -98,23 +99,25 @@ class _BarangState extends State<Barang> {
               ],
             ),
           ),
-          floatingActionButton: !isKeyboardVisible
-              ? FloatingActionButton.extended(
-                  backgroundColor: AppColors.teal,
-                  foregroundColor: Colors.white,
-                  onPressed: () {
-                    Get.bottomSheet(
-                      AddBaranG(),
-                      isScrollControlled: true,
-                    );
-                  },
-                  icon: const Icon(Icons.add_rounded),
-                  label: const Text(
-                    'Tambah Produk',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                )
-              : null,
+          floatingActionButton: Obx(() {
+            final isAdmin = Get.find<AuthController>().isAdmin;
+            if (!isAdmin || isKeyboardVisible) return const SizedBox.shrink();
+            return FloatingActionButton.extended(
+                backgroundColor: AppColors.teal,
+                foregroundColor: Colors.white,
+                onPressed: () {
+                  Get.bottomSheet(
+                    AddBaranG(),
+                    isScrollControlled: true,
+                  );
+                },
+                icon: const Icon(Icons.add_rounded),
+                label: const Text(
+                  'Tambah Produk',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              );
+          }),
         );
       },
     );

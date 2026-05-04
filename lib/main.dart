@@ -1,6 +1,10 @@
 import 'package:cashier/barang/barang.dart';
+import 'package:cashier/auth/login_page.dart';
+import 'package:cashier/auth/kelola_user_page.dart';
+import 'package:cashier/controller/authcontroller.dart';
 import 'package:cashier/controller/barangcontroller.dart';
 import 'package:cashier/controller/transaksicontroller.dart';
+import 'package:cashier/controller/usercontroller.dart';
 import 'package:cashier/dashboard/dashboard.dart';
 import 'package:cashier/laporan/laporan.dart';
 import 'package:cashier/theme/app_colors.dart';
@@ -18,6 +22,11 @@ void main() async {
   await Permission.camera.request();
   await Permission.storage.request();
   await Firebase.initializeApp();
+  
+  // Register controllers after Firebase is initialized
+  Get.put(AuthController());
+  Get.put(UserController());
+  
   await initializeDateFormatting('id_ID', null).then((_) => runApp(MyApp()));
 }
 
@@ -35,11 +44,16 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
+    final auth = Get.find<AuthController>();
     return GetMaterialApp(
       title: 'Kasir Kilat',
       theme: AppTheme.theme,
       debugShowCheckedModeBanner: false,
-      home: MainWrapper(),
+      initialRoute: auth.isLoggedIn ? '/main' : '/login',
+      getPages: [
+        GetPage(name: '/login', page: () => const LoginPage()),
+        GetPage(name: '/main',  page: () => MainWrapper()),
+      ],
     );
   }
 }
@@ -117,6 +131,11 @@ class _MainWrapperState extends State<MainWrapper> {
   }
 
   void _goToPage(int index) {
+    if (index == 4) {
+      // Kelola is a full-screen route, not a PageView slide
+      Get.to(() => const KelolaUserPage());
+      return;
+    }
     setState(() {
       _currentIndex = index;
       _pageController.animateToPage(
@@ -153,6 +172,8 @@ class _MainWrapperState extends State<MainWrapper> {
                 Transaksi(),
                 Barang(),
                 Laporan(),
+                // Page 4 — Kelola (admin only, pushed via Get.to from nav item)
+                const KelolaPlaceholder(),
               ],
               onPageChanged: (value) {
                 setState(() {
@@ -186,19 +207,25 @@ class _MainWrapperState extends State<MainWrapper> {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildNavItem(0, Icons.dashboard_rounded,
-                    Icons.dashboard_outlined, 'Dashboard'),
-                _buildNavItem(1, Icons.swap_horiz_rounded,
-                    Icons.swap_horiz_rounded, 'Transaksi'),
-                _buildNavItem(2, Icons.inventory_2_rounded,
-                    Icons.inventory_2_outlined, 'Produk'),
-                _buildNavItem(3, Icons.bar_chart_rounded,
-                    Icons.bar_chart_rounded, 'Laporan'),
-              ],
-            ),
+            child: Obx(() {
+              final auth = Get.find<AuthController>();
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildNavItem(0, Icons.dashboard_rounded,
+                      Icons.dashboard_outlined, 'Dashboard'),
+                  _buildNavItem(1, Icons.swap_horiz_rounded,
+                      Icons.swap_horiz_rounded, 'Transaksi'),
+                  _buildNavItem(2, Icons.inventory_2_rounded,
+                      Icons.inventory_2_outlined, 'Produk'),
+                  _buildNavItem(3, Icons.bar_chart_rounded,
+                      Icons.bar_chart_rounded, 'Laporan'),
+                  if (auth.isAdmin)
+                    _buildNavItem(4, Icons.manage_accounts_rounded,
+                        Icons.manage_accounts_outlined, 'Kelola'),
+                ],
+              );
+            }),
           ),
         ),
       ),
