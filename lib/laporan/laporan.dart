@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cashier/controller/authcontroller.dart';
 import 'package:cashier/controller/transaksicontroller.dart';
 import 'package:cashier/manage/formater.dart';
 import 'package:cashier/theme/app_colors.dart';
@@ -209,13 +210,16 @@ class _LaporanState extends State<Laporan> {
             ),
             const SizedBox(width: 10),
             Expanded(
-              child: _statCard(
-                label: 'Total Modal',
-                value: uang.format(totalCost),
-                icon: Icons.account_balance_wallet_outlined,
-                gradient: AppColors.amberGradient,
-                textDark: true,
-              ),
+              child: Obx(() {
+                final isAdmin = Get.find<AuthController>().isAdmin;
+                return _statCard(
+                  label: 'Total Modal',
+                  value: isAdmin ? uang.format(totalCost) : '—',
+                  icon: Icons.account_balance_wallet_outlined,
+                  gradient: AppColors.amberGradient,
+                  textDark: true,
+                );
+              }),
             ),
           ],
         ),
@@ -223,18 +227,21 @@ class _LaporanState extends State<Laporan> {
         Row(
           children: [
             Expanded(
-              child: _statCard(
-                label: 'Laba / Rugi',
-                value: uang.format(profit),
-                icon: profit >= 0
-                    ? Icons.arrow_upward_rounded
-                    : Icons.arrow_downward_rounded,
-                gradient: profit >= 0
-                    ? const LinearGradient(
-                        colors: [Color(0xFF10B981), Color(0xFF34D399)])
-                    : const LinearGradient(
-                        colors: [Color(0xFFEF4444), Color(0xFFF87171)]),
-              ),
+              child: Obx(() {
+                final isAdmin = Get.find<AuthController>().isAdmin;
+                return _statCard(
+                  label: 'Laba / Rugi',
+                  value: isAdmin ? uang.format(profit) : '—',
+                  icon: profit >= 0
+                      ? Icons.arrow_upward_rounded
+                      : Icons.arrow_downward_rounded,
+                  gradient: profit >= 0
+                      ? const LinearGradient(
+                          colors: [Color(0xFF10B981), Color(0xFF34D399)])
+                      : const LinearGradient(
+                          colors: [Color(0xFFEF4444), Color(0xFFF87171)]),
+                );
+              }),
             ),
             const SizedBox(width: 10),
             Expanded(
@@ -765,25 +772,33 @@ class _LaporanState extends State<Laporan> {
                       ],
                     ),
                   ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: profit >= 0
-                          ? AppColors.success.withOpacity(0.1)
-                          : AppColors.danger.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Text(
-                      uang.format(profit),
-                      style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.bold,
-                        color:
-                            profit >= 0 ? AppColors.success : AppColors.danger,
+                  Obx(() {
+                    final isAdmin = Get.find<AuthController>().isAdmin;
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: isAdmin
+                            ? (profit >= 0
+                                ? AppColors.success.withOpacity(0.1)
+                                : AppColors.danger.withOpacity(0.1))
+                            : AppColors.textSecondary.withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                    ),
-                  ),
+                      child: Text(
+                        isAdmin ? uang.format(profit) : '—',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: isAdmin
+                              ? (profit >= 0
+                                  ? AppColors.success
+                                  : AppColors.danger)
+                              : AppColors.textSecondary,
+                        ),
+                      ),
+                    );
+                  }),
                 ],
               ),
             );

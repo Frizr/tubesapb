@@ -1,3 +1,4 @@
+import 'package:cashier/controller/authcontroller.dart';
 import 'package:cashier/controller/barangcontroller.dart';
 import 'package:cashier/controller/transaksicontroller.dart';
 import 'package:cashier/manage/formater.dart';
@@ -178,6 +179,26 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ],
             ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.navy.withOpacity(0.06),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: IconButton(
+            onPressed: () {
+              _showLogoutDialog();
+            },
+            icon: const Icon(Icons.logout_rounded, color: AppColors.danger),
           ),
         ),
       ],
@@ -669,6 +690,101 @@ class _DashboardState extends State<Dashboard> {
           ),
         );
       },
+    );
+  }
+
+  void _showLogoutDialog() {
+    Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.danger.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.logout_rounded,
+                    color: AppColors.danger, size: 32),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Keluar Akun',
+                style: TextStyle(
+                  fontFamily: 'm',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'Apakah Anda yakin ingin keluar dari akun ini?',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'm',
+                  fontSize: 14,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 28),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => Get.back(),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        side: const BorderSide(color: AppColors.textSecondary),
+                      ),
+                      child: const Text(
+                        'Batal',
+                        style: TextStyle(
+                          fontFamily: 'm',
+                          color: AppColors.textSecondary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.back(); // close dialog
+                        Get.find<AuthController>().logout();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.danger,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: const Text(
+                        'Keluar',
+                        style: TextStyle(
+                          fontFamily: 'm',
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
